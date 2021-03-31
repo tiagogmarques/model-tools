@@ -13,11 +13,15 @@ from result_caching import store_xarray, store
 
 class LayerMappedModel(BrainModel):
     def __init__(self, identifier, activations_model, visual_degrees=None, region_layer_map: Optional[dict] = None):
-        self.identifier = identifier
+        self._identifier = identifier
         self.activations_model = activations_model
         self._visual_degrees = visual_degrees
         self.region_layer_map = region_layer_map or {}
         self.recorded_regions = []
+
+    @property
+    def identifier(self):
+        return self._identifier
 
     def look_at(self, stimuli, number_of_trials=1):
         layer_regions = {}
